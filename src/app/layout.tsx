@@ -13,7 +13,7 @@ export default function RootLayout({
   return (
     <html lang="ko">
       <body
-        className={`h-full bg-gradient-to-br from-slate-800 to-slate-700 antialiased`}
+        className={`h-full bg-gradient-to-br from-slate-500 to-slate-50 antialiased`}
       >
         {children}
       </body>
