@@ -3,6 +3,7 @@
 ## Environment Variables
 
 ```bash
+BASE_URL=
 APPWRITE_ENDPOINT=
 APPWRITE_PROJECT_ID=
 APPWRITE_DATABASE_ID=

@@ -1,6 +1,7 @@
 import { z } from 'zod';
 
 const environmentSchema = z.object({
+  BASE_URL: z.string(),
   APPWRITE_PROJECT_ID: z.string(),
   APPWRITE_ENDPOINT: z.string(),
   APPWRITE_DATABASE_ID: z.string(),
