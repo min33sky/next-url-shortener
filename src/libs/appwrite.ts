@@ -19,7 +19,9 @@ const storage = new Storage(client);
  * DB에 Document를 생성합니다.
  * @param data DB에 저장할 데이터
  */
-const createDocument = async (data: Record<string, any>) => {
+const createDocument = async (
+  data: Record<string, any>,
+): Promise<ShortLink> => {
   try {
     return await databases.createDocument(
       process.env.NEXT_PUBLIC_APPWRITE_DATABASE_ID,

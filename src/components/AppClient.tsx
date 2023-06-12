@@ -11,9 +11,10 @@ import useBaseStore from '@/store/useBaseStore';
 
 export default function AppClient() {
   const router = useRouter();
-  const { loading, setLoading } = useBaseStore((state) => ({
+  const { loading, setLoading, setShortLink } = useBaseStore((state) => ({
     loading: state.loading,
     setLoading: state.setLoading,
+    setShortLink: state.setShortLink,
   }));
 
   const [originalUrl, setOriginalUrl] = useState('');
@@ -29,10 +30,10 @@ export default function AppClient() {
         setLoading(true);
 
         const slug = shortUrl || nanoid(10);
+        const exists = await existsBySlug(shortUrl);
 
-        const exist = await existsBySlug(shortUrl);
-
-        if (exist) {
+        if (exists) {
+          // TODO: 토스트로 표시하기
           console.log('이미 존재하는 slug 입니다.');
           return;
         }
@@ -44,6 +45,7 @@ export default function AppClient() {
 
         console.log('response: ', response);
 
+        setShortLink(`${getBaseUrl()}/${slug}`);
         setOriginalUrl('');
         setShortUrl('');
         router.push('/success');
