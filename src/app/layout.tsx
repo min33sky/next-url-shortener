@@ -1,4 +1,6 @@
+import ClientProvider from '@/components/ClientProvider';
 import './globals.css';
+import Header from '@/components/Header';
 
 export const metadata = {
   title: '짧은 URL 만들기',
@@ -11,11 +13,20 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="ko">
+    <html
+      lang="ko"
+      className="light"
+      style={{
+        colorScheme: 'light',
+      }}
+    >
       <body
-        className={`h-full bg-gradient-to-br from-slate-500 to-slate-50 antialiased`}
+        className={`h-full bg-gradient-to-br from-slate-500 to-slate-50 antialiased dark:from-slate-700`}
       >
-        {children}
+        <ClientProvider>
+          <Header />
+          {children}
+        </ClientProvider>
       </body>
     </html>
   );

@@ -48,10 +48,10 @@ export default function AppClient() {
   return (
     <form
       onSubmit={handleSubmit}
-      className="flex w-11/12 max-w-xl flex-col space-y-5 rounded-lg bg-white px-3 py-5 shadow-2xl"
+      className="flex w-11/12 max-w-xl flex-col space-y-5 rounded-lg bg-white px-3 py-5 text-slate-700 shadow-2xl"
     >
       <header className="space-y-4">
-        <h1 className="text-center text-lg font-bold">URL 줄이기</h1>
+        <h1 className="text-center text-lg font-bold ">URL 줄이기</h1>
         <div className="flex items-center space-x-2 text-rose-500">
           <SpeakerWaveIcon className="inline-block h-5 w-5" />
           <span>긴 URL을 짧게 줄여주는 서비스입니다.</span>
@@ -69,7 +69,7 @@ export default function AppClient() {
           <input
             id="originalUrl"
             type="text"
-            className="flex-1 border-b-2 text-lg outline-none"
+            className="flex-1 border-b-2 bg-transparent text-lg outline-none"
             placeholder="원본 URL을 입력하세요."
             value={originalUrl}
             onChange={(e) => setOriginalUrl(e.target.value)}
