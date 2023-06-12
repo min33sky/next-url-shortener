@@ -5,7 +5,7 @@ import getBaseUrl from '@/libs/getBaseUrl';
 import { LinkIcon, SpeakerWaveIcon } from '@heroicons/react/24/outline';
 import { useCallback, useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { createDocument } from '@/libs/appwrite';
+import { createDocument, existsBySlug } from '@/libs/appwrite';
 import { nanoid } from 'nanoid';
 
 export default function AppClient() {
@@ -22,9 +22,18 @@ export default function AppClient() {
       }
 
       try {
+        const slug = shortUrl || nanoid(8);
+
+        const exist = await existsBySlug(shortUrl);
+
+        if (exist) {
+          console.log('이미 존재하는 slug 입니다.');
+          return;
+        }
+
         const response = await createDocument({
           url: originalUrl,
-          slug: shortUrl || nanoid(8),
+          slug,
         });
 
         console.log('response: ', response);
@@ -35,7 +44,6 @@ export default function AppClient() {
       } catch (error) {
         console.log('에러 발생: ', error);
       } finally {
-        //
       }
     },
     [originalUrl, router, shortUrl],

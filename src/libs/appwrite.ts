@@ -1,4 +1,4 @@
-import { Client, ID, Account, Databases, Storage } from 'appwrite';
+import { Client, ID, Account, Databases, Storage, Query } from 'appwrite';
 
 console.log('APPWRITE_ENDPOINT', process.env.APPWRITE_ENDPOINT);
 console.log('APPWRITE_PROJECT_ID', process.env.APPWRITE_PROJECT_ID);
@@ -29,6 +29,27 @@ const createDocument = async (data: Record<string, any>) => {
     );
   } catch (error) {
     console.log('>>>>> createDocument error : ', error);
+    throw error;
+  }
+};
+
+/**
+ * 이미 존재하는 Slug인지 확인하는 함수
+ * @param slug
+ */
+const existsBySlug = async (slug: string) => {
+  try {
+    //? AppWrite의 collection index 설정에 slug를 추가해줘야 작동한다.
+    const result = await databases.listDocuments(
+      process.env.NEXT_PUBLIC_APPWRITE_DATABASE_ID,
+      process.env.NEXT_PUBLIC_APPWRITE_SHORT_LINK_COLLECTION_ID,
+      [Query.equal('slug', slug)],
+    );
+
+    console.log('>>>>> getDocumentBySlug success ~~~~~~~~~~~~');
+    return result.documents[0];
+  } catch (error) {
+    console.log('>>>>> getDocumentBySlug error : ', error);
     throw error;
   }
 };
@@ -81,6 +102,8 @@ export {
   storage,
   ID,
   createDocument,
+  existsBySlug,
   deleteDocumentById,
   updateDocumentById,
+  Query,
 };
