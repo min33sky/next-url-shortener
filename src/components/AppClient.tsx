@@ -7,11 +7,17 @@ import { useCallback, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { createDocument, existsBySlug } from '@/libs/appwrite';
 import { nanoid } from 'nanoid';
+import useBaseStore from '@/store/useBaseStore';
 
 export default function AppClient() {
+  const router = useRouter();
+  const { loading, setLoading } = useBaseStore((state) => ({
+    loading: state.loading,
+    setLoading: state.setLoading,
+  }));
+
   const [originalUrl, setOriginalUrl] = useState('');
   const [shortUrl, setShortUrl] = useState('');
-  const router = useRouter();
 
   const handleSubmit = useCallback(
     async (e: React.FormEvent<HTMLFormElement>) => {
@@ -20,6 +26,8 @@ export default function AppClient() {
       if (!originalUrl) return;
 
       try {
+        setLoading(true);
+
         const slug = shortUrl || nanoid(10);
 
         const exist = await existsBySlug(shortUrl);
@@ -42,9 +50,10 @@ export default function AppClient() {
       } catch (error) {
         console.log('에러 발생: ', error);
       } finally {
+        setLoading(false);
       }
     },
-    [originalUrl, router, shortUrl],
+    [originalUrl, router, setLoading, shortUrl],
   );
 
   return (
@@ -104,8 +113,11 @@ export default function AppClient() {
 
       <Divider />
 
-      <button className="w-full rounded-md bg-slate-700 py-3 tracking-widest text-white transition hover:bg-slate-900">
-        등록
+      <button
+        disabled={loading}
+        className="w-full rounded-md bg-slate-700 py-3 tracking-widest text-white transition hover:bg-slate-900 disabled:cursor-not-allowed disabled:bg-slate-400"
+      >
+        {loading ? '로딩 중...' : 'URL 줄이기'}
       </button>
     </form>
   );
