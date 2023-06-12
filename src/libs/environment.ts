@@ -2,10 +2,10 @@ import { z } from 'zod';
 
 const environmentSchema = z.object({
   BASE_URL: z.string(),
-  APPWRITE_PROJECT_ID: z.string(),
-  APPWRITE_ENDPOINT: z.string(),
-  APPWRITE_DATABASE_ID: z.string(),
-  APPWRITE_SHORT_LINK_COLLECTION_ID: z.string(),
+  NEXT_PUBLIC_APPWRITE_PROJECT_ID: z.string(),
+  NEXT_PUBLIC_APPWRITE_ENDPOINT: z.string(),
+  NEXT_PUBLIC_APPWRITE_DATABASE_ID: z.string(),
+  NEXT_PUBLIC_APPWRITE_SHORT_LINK_COLLECTION_ID: z.string(),
 });
 
 declare global {

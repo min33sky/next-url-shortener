@@ -4,8 +4,8 @@ console.log('APPWRITE_ENDPOINT', process.env.APPWRITE_ENDPOINT);
 console.log('APPWRITE_PROJECT_ID', process.env.APPWRITE_PROJECT_ID);
 
 const client = new Client()
-  .setEndpoint(process.env.APPWRITE_ENDPOINT)
-  .setProject(process.env.APPWRITE_PROJECT_ID);
+  .setEndpoint(process.env.NEXT_PUBLIC_APPWRITE_ENDPOINT)
+  .setProject(process.env.NEXT_PUBLIC_APPWRITE_PROJECT_ID);
 
 const account = new Account(client);
 const databases = new Databases(client);
@@ -22,8 +22,8 @@ const storage = new Storage(client);
 const createDocument = async (data: Record<string, any>) => {
   try {
     return await databases.createDocument(
-      process.env.APPWRITE_DATABASE_ID,
-      process.env.APPWRITE_SHORT_LINK_COLLECTION_ID,
+      process.env.NEXT_PUBLIC_APPWRITE_DATABASE_ID,
+      process.env.NEXT_PUBLIC_APPWRITE_SHORT_LINK_COLLECTION_ID,
       ID.unique(),
       data,
     );
@@ -40,8 +40,8 @@ const createDocument = async (data: Record<string, any>) => {
 const deleteDocumentById = async (documentId: string) => {
   try {
     await databases.deleteDocument(
-      process.env.APPWRITE_DATABASE_ID,
-      process.env.APPWRITE_SHORT_LINK_COLLECTION_ID,
+      process.env.NEXT_PUBLIC_APPWRITE_DATABASE_ID,
+      process.env.NEXT_PUBLIC_APPWRITE_SHORT_LINK_COLLECTION_ID,
       documentId,
     );
 
@@ -62,8 +62,8 @@ const updateDocumentById = async (
 ) => {
   try {
     await databases.updateDocument(
-      process.env.APPWRITE_DATABASE_ID,
-      process.env.APPWRITE_SHORT_LINK_COLLECTION_ID,
+      process.env.NEXT_PUBLIC_APPWRITE_DATABASE_ID,
+      process.env.NEXT_PUBLIC_APPWRITE_SHORT_LINK_COLLECTION_ID,
       documentId,
       data,
     );

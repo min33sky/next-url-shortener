@@ -5,7 +5,10 @@ import type { NextRequest } from 'next/server';
 export function middleware(request: NextRequest) {
   console.log('request.nextUrl.pathname : ', request.nextUrl.pathname);
 
-  if (request.nextUrl.pathname === '/') {
+  if (
+    request.nextUrl.pathname === '/' ||
+    request.nextUrl.pathname === '/success'
+  ) {
     return NextResponse.next();
   } else {
     //! 지우고 DB에서 직접 불러오기

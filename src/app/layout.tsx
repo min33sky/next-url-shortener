@@ -15,10 +15,11 @@ export default function RootLayout({
   return (
     <html
       lang="ko"
-      className="light"
-      style={{
-        colorScheme: 'light',
-      }}
+      // className="light"
+      // style={{
+      //   colorScheme: 'light',
+      // }}
+      suppressHydrationWarning
     >
       <body
         className={`h-full bg-gradient-to-br from-slate-500 to-slate-50 antialiased dark:from-slate-700`}
