@@ -9,7 +9,6 @@ import {
   ClipboardDocumentIcon,
   ArrowLeftOnRectangleIcon,
 } from '@heroicons/react/24/outline';
-import { set } from 'zod';
 
 export default function SuccessPage() {
   const [clicked, setClicked] = useState(false);

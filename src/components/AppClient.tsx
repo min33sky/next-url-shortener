@@ -55,7 +55,7 @@ export default function AppClient() {
         setLoading(false);
       }
     },
-    [originalUrl, router, setLoading, shortUrl],
+    [originalUrl, router, setLoading, setShortLink, shortUrl],
   );
 
   return (
