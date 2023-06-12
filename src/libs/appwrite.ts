@@ -44,8 +44,6 @@ const existsBySlug = async (slug: string) => {
       process.env.NEXT_PUBLIC_APPWRITE_SHORT_LINK_COLLECTION_ID,
       [Query.equal('slug', slug)],
     );
-
-    console.log('>>>>> getDocumentBySlug success ~~~~~~~~~~~~');
     return result.documents[0];
   } catch (error) {
     console.log('>>>>> getDocumentBySlug error : ', error);
