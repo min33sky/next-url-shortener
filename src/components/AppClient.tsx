@@ -1,7 +1,7 @@
 'use client';
 
 import Divider from '@/components/Divider';
-import getBaseUrl from '@/libs/getBaseUrl';
+import getBaseUrl from '@/utils/getBaseUrl';
 import { LinkIcon, SpeakerWaveIcon } from '@heroicons/react/24/outline';
 import { useCallback, useState } from 'react';
 import { useRouter } from 'next/navigation';
