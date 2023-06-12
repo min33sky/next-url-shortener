@@ -1,5 +1,7 @@
 # Next URL Shortener
 
+> URL을 짧게 만들어주는 서비스
+
 ## Environment Variables
 
 ```bash

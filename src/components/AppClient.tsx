@@ -17,12 +17,10 @@ export default function AppClient() {
     async (e: React.FormEvent<HTMLFormElement>) => {
       e.preventDefault();
 
-      if (!originalUrl) {
-        return;
-      }
+      if (!originalUrl) return;
 
       try {
-        const slug = shortUrl || nanoid(8);
+        const slug = shortUrl || nanoid(10);
 
         const exist = await existsBySlug(shortUrl);
 
@@ -66,7 +64,7 @@ export default function AppClient() {
 
       <div className="space-y-2">
         <label htmlFor="originalUrl" className="font-bold">
-          원본 URL
+          원본 URL (필수)
         </label>
         <div className="flex items-center space-x-2">
           <LinkIcon className="inline-block h-5 w-5" />
@@ -74,7 +72,7 @@ export default function AppClient() {
             id="originalUrl"
             type="text"
             className="flex-1 border-b-2 bg-transparent text-lg outline-none"
-            placeholder="원본 URL을 입력하세요."
+            placeholder="예) https://google.com"
             value={originalUrl}
             onChange={(e) => setOriginalUrl(e.target.value)}
             required
@@ -86,7 +84,7 @@ export default function AppClient() {
 
       <div className="space-y-2">
         <label htmlFor="shortUrl" className="font-bold">
-          짧은 URL
+          짧은 URL (선택)
         </label>
         <div className="flex items-center space-x-2">
           <p className="flex-shrink-0 space-x-2 text-lg font-bold">
@@ -97,7 +95,7 @@ export default function AppClient() {
             id="shortUrl"
             type="text"
             className="w-full border-b-2 bg-transparent text-lg outline-none"
-            placeholder="원하는 URL을 입력하세요."
+            placeholder="예) abc123"
             value={shortUrl}
             onChange={(e) => setShortUrl(e.target.value)}
           />
@@ -106,7 +104,7 @@ export default function AppClient() {
 
       <Divider />
 
-      <button className="w-full rounded-md bg-slate-700 py-3 text-white transition hover:bg-slate-900">
+      <button className="w-full rounded-md bg-slate-700 py-3 tracking-widest text-white transition hover:bg-slate-900">
         등록
       </button>
     </form>
