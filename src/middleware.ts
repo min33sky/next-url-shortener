@@ -1,8 +1,9 @@
 import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
+import getBaseUrl from './utils/getBaseUrl';
 
 // This function can be marked `async` if using `await` inside
-export function middleware(request: NextRequest) {
+export async function middleware(request: NextRequest) {
   console.log('request.nextUrl.pathname : ', request.nextUrl.pathname);
 
   if (
@@ -11,14 +12,21 @@ export function middleware(request: NextRequest) {
   ) {
     return NextResponse.next();
   } else {
-    //! 지우고 DB에서 직접 불러오기
-    fetch('http://localhost:3000/api/get-url')
-      .then((res) => res.json())
-      .then((data) => console.log(data));
+    const slug = request.nextUrl.pathname.slice(1);
 
-    // TODO: DB에서 해당 URL을 찾아서 redirect. 없으면 404
-    const url = new URL('https://www.google.com');
-    return NextResponse.redirect(url.href);
+    try {
+      const response = await fetch(
+        `http://localhost:3000/api/get-url?slug=${slug}`,
+      ).then((res) => res.json());
+
+      if (response.url) {
+        return NextResponse.redirect(response.url);
+      } else {
+        throw new Error('no url data');
+      }
+    } catch (error) {
+      return NextResponse.redirect(getBaseUrl());
+    }
   }
 }
 
