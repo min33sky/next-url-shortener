@@ -2,7 +2,7 @@
 
 import useBaseStore from '@/store/useBaseStore';
 import Link from 'next/link';
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import Confetti from 'react-confetti';
 import {
   ClipboardDocumentCheckIcon,
@@ -11,14 +11,12 @@ import {
 } from '@heroicons/react/24/outline';
 
 export default function SuccessPage() {
+  const [width, setWidth] = useState(0);
+  const [height, setHeight] = useState(0);
   const [clicked, setClicked] = useState(false);
   const { shortLink } = useBaseStore((state) => ({
     shortLink: state.shortLink,
   }));
-
-  console.log('shortLink: ', shortLink);
-
-  // TODO: Width, Height를 동적으로 가져오도록 수정한다.
 
   const copyToClipboard = useCallback(() => {
     setClicked(true);
@@ -27,8 +25,22 @@ export default function SuccessPage() {
 
   const Icon = clicked ? ClipboardDocumentCheckIcon : ClipboardDocumentIcon;
 
+  useEffect(() => {
+    const observer = new ResizeObserver(() => {
+      const { innerWidth, innerHeight } = window;
+      setWidth(innerWidth - 20);
+      setHeight(innerHeight - 20);
+    });
+
+    observer.observe(window.document.body);
+
+    return () => {
+      observer.disconnect();
+    };
+  }, []);
+
   return (
-    <div className="flex h-full items-center justify-center overflow-x-hidden">
+    <div className="flex h-full items-center justify-center overflow-hidden">
       <div className="flex flex-col space-y-4 rounded-lg bg-slate-100 px-10 py-6 text-slate-700 shadow-2xl">
         <h1 className="text-center text-lg font-bold">
           URL이 성공적으로 줄여졌습니다.
@@ -58,8 +70,8 @@ export default function SuccessPage() {
       <Confetti
         numberOfPieces={300}
         recycle={false}
-        width={1920}
-        height={300}
+        width={width}
+        height={height}
       />
     </div>
   );
