@@ -2,17 +2,16 @@
 
 import useBaseStore from '@/store/useBaseStore';
 import Link from 'next/link';
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import Confetti from 'react-confetti';
 import {
   ClipboardDocumentCheckIcon,
   ClipboardDocumentIcon,
   ArrowLeftOnRectangleIcon,
 } from '@heroicons/react/24/outline';
+import useWindowSize from '@/hooks/useWindowSize';
 
 export default function SuccessPage() {
-  const [width, setWidth] = useState(0);
-  const [height, setHeight] = useState(0);
   const [clicked, setClicked] = useState(false);
   const { shortLink } = useBaseStore((state) => ({
     shortLink: state.shortLink,
@@ -25,19 +24,7 @@ export default function SuccessPage() {
 
   const Icon = clicked ? ClipboardDocumentCheckIcon : ClipboardDocumentIcon;
 
-  useEffect(() => {
-    const observer = new ResizeObserver(() => {
-      const { innerWidth, innerHeight } = window;
-      setWidth(innerWidth - 20);
-      setHeight(innerHeight - 20);
-    });
-
-    observer.observe(window.document.body);
-
-    return () => {
-      observer.disconnect();
-    };
-  }, []);
+  const { width, height } = useWindowSize();
 
   return (
     <div className="flex h-full items-center justify-center overflow-hidden">

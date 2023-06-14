@@ -15,8 +15,8 @@ export default function RootLayout({
   return (
     <html lang="ko" suppressHydrationWarning>
       <body
-        className={`h-full bg-gradient-to-br from-slate-500 to-slate-50
-                      antialiased dark:from-slate-700`}
+        className={`h-full overflow-hidden bg-gradient-to-br from-slate-500
+                      to-slate-50 antialiased dark:from-slate-700`}
       >
         <ClientProvider>
           <Header />
