@@ -14,10 +14,15 @@ export async function middleware(request: NextRequest) {
   } else {
     const slug = request.nextUrl.pathname.slice(1);
 
+    console.log('slug : ', slug);
+
     try {
+      // TODO: fetch from server
       const response = await fetch(
-        `http://localhost:3000/api/get-url?slug=${slug}`,
+        `${process.env.NEXT_PUBLIC_BASE_URL}/api/get-url?slug=${slug}`,
       ).then((res) => res.json());
+
+      console.log('response : ', response);
 
       if (response.url) {
         return NextResponse.redirect(response.url);

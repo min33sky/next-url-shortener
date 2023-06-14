@@ -13,6 +13,8 @@ import { createDocument, existsBySlug } from '@/libs/appwrite';
 import { nanoid } from 'nanoid';
 import useBaseStore from '@/store/useBaseStore';
 import { toast } from 'react-hot-toast';
+import { urlSchema } from '@/utils/schema';
+import { z } from 'zod';
 
 export default function AppClient() {
   const router = useRouter();
@@ -34,18 +36,23 @@ export default function AppClient() {
       try {
         setLoading(true);
 
+        //? URL 유효성 검사
+        urlSchema.parse(originalUrl);
+
         const slug = shortUrl || nanoid(10);
         const exists = await existsBySlug(shortUrl);
 
-        if (exists) return toast.error('이미 존재하는 slug 입니다.');
+        if (exists) return toast.error('중복되는 짧은 주소가 존재합니다.');
 
         await createDocument({ url: originalUrl, slug });
-
         setShortLink(`${getBaseUrl()}/${slug}`);
         router.push('/success');
-      } catch (error) {
-        console.log('에러 발생: ', error);
-        toast.error('에러가 발생했습니다.');
+      } catch (error: any) {
+        if (error instanceof z.ZodError) {
+          toast.error(error.issues[0]?.message || '에러가 발생했습니다.');
+        } else {
+          toast.error(error?.message || '에러가 발생했습니다.');
+        }
       } finally {
         setLoading(false);
       }
