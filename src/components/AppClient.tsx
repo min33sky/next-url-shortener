@@ -7,7 +7,7 @@ import {
   ScissorsIcon,
   SpeakerWaveIcon,
 } from '@heroicons/react/24/outline';
-import { useCallback, useState } from 'react';
+import { useCallback, useRef, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { createDocument, existsBySlug } from '@/libs/appwrite';
 import { nanoid } from 'nanoid';
@@ -26,6 +26,7 @@ export default function AppClient() {
 
   const [originalUrl, setOriginalUrl] = useState('');
   const [shortUrl, setShortUrl] = useState('');
+  const originalUrlRef = useRef<HTMLInputElement>(null);
 
   const handleSubmit = useCallback(
     async (e: React.FormEvent<HTMLFormElement>) => {
@@ -50,6 +51,7 @@ export default function AppClient() {
       } catch (error: any) {
         if (error instanceof z.ZodError) {
           toast.error(error.issues[0]?.message || '에러가 발생했습니다.');
+          originalUrlRef.current?.focus();
         } else {
           toast.error(error?.message || '에러가 발생했습니다.');
         }
@@ -85,6 +87,7 @@ export default function AppClient() {
         <div className="flex items-center space-x-2">
           <LinkIcon className="inline-block h-5 w-5" />
           <input
+            ref={originalUrlRef}
             id="originalUrl"
             type="text"
             className="flex-1 border-b-2 bg-transparent text-lg outline-none"
@@ -95,8 +98,6 @@ export default function AppClient() {
           />
         </div>
       </div>
-
-      {/* <Divider /> */}
 
       <div className="space-y-2">
         <label htmlFor="shortUrl" className="font-bold">
